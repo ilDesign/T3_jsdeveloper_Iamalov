@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Тестовое задание «Ось 2»</title>
+  <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Noto+Sans">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type='text/javascript'>
+    $(document).ready(function(){
+      var a, b;
+      newTask();
+
+      $("#arrow-a input").keyup(function(){
+        if ($(this).val()==a){
+          $("#arrow-a input").hide().removeClass("mistake-input");
+          $("#arrow-a span").show();
+          $("#arrow-b").show();
+          $("#term-a").removeClass("mistake");
+        }
+        else {
+          $("#term-a").addClass("mistake");
+          $("#arrow-a input").addClass("mistake-input");
+        }
+      });
+
+      $("#arrow-b input").keyup(function(){
+        if ($(this).val()==b){
+          $("#arrow-b input").hide().removeClass("mistake-input");
+          $("#arrow-b span").show();
+          $("#exercise input").show();
+          $("#result").hide();
+          $("#term-b").removeClass("mistake");
+        }
+        else {
+          $("#term-b").addClass("mistake");
+          $("#arrow-b input").addClass("mistake-input");
+        }
+      });
+
+      $("#exercise input").keyup(function(){
+        if ($(this).val()==(a + b)){
+          $("#exercise input").hide().removeClass("mistake-input");
+          $("#result").html(a+b).show();
+        }
+        else {
+          $("#exercise input").addClass("mistake-input");
+        }
+      });
+
+      $("button").click(function(){
+        newTask();
+      });
+
+      function newTask(){
+        a = getRndInteger(6, 9);
+        b = getRndInteger(11-a, 14-a);
+
+        $("#term-a").html(a).removeClass("mistake");;
+        $("#term-b").html(b).removeClass("mistake");;
+        $("#result").html("?");
+        $("#arrow-a span").html(a).hide();
+        $("#arrow-b span").html(b).hide();
+        $("#arrow-a img").css("width", (a*39)+"px");
+        $("#arrow-b").css("left", (a*39)+"px").hide();
+        $("#arrow-b img").css("width", (b*39)+"px");
+        $("#arrow-a input").val('').show().removeClass("mistake-input");
+        $("#arrow-b input").val('').show().removeClass("mistake-input");
+        $("#exercise input").val('').hide().removeClass("mistake-input");
+        $("#arrow-a").show();
+      }
+
+      function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) ) + min;
+      }
+    });
+  </script>
+</head>
+<body>
+  <div id="button-top">
+    <button>Новая задача</button>
+  </div>
+  <div id="task">
+    <div id="exercise">
+      <span id="term-a"></span> +
+      <span id="term-b"></span> =
+      <span id="result"></span><input maxlength="2">
+    </div>
+    <div id="graphics">
+      <img id="axis" src="images/axis.png">
+      <div id="arrows-container">
+        <div class="arrows" id="arrow-a">
+          <span></span><input maxlength="1"><br>
+          <img src="images/arrow.png">
+        </div>
+        <div class="arrows" id="arrow-b">
+          <span></span><input maxlength="1"><br>
+          <img src="images/arrow.png">
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
